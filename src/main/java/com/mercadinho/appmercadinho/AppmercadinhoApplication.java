@@ -1,0 +1,13 @@
+package com.mercadinho.appmercadinho;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AppmercadinhoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(AppmercadinhoApplication.class, args);
+	}
+
+}
