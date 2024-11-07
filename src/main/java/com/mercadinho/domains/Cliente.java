@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "clientes")
 public class Cliente extends Pessoa {
 
     @OneToMany(mappedBy = "cliente")

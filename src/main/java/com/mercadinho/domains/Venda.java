@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "vendas")
 public class Venda {
 
     @Id

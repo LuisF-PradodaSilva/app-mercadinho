@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "pessoas")
 public abstract class Pessoa {
 
     @Id

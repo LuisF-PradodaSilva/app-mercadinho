@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "funcionarios")
 public class Funcionario extends Pessoa {
 
     public Funcionario() {
