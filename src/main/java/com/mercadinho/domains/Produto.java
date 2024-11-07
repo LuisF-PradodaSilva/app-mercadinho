@@ -1,17 +1,25 @@
 package com.mercadinho.domains;
 
 import com.mercadinho.domains.enums.TipoProduto;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+@Entity
+@Table(name = "produtos")
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String nomeProduto;
     private String descricao;
     private double valorCompra;
     private double valorVenda;
     private String unidadeMedida;
+
+    @ManyToOne
+    @JoinColumn(name = "idvenda")
     private Venda venda;
     private String tipoProduto;
 

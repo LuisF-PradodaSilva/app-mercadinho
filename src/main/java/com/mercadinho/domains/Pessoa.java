@@ -1,6 +1,8 @@
 package com.mercadinho.domains;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mercadinho.domains.enums.TipoPessoa;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -8,12 +10,23 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "pessoas")
 public abstract class Pessoa {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected Long id;
     protected String nomePessoa;
+
+    @Column(unique = true)
     protected String cpf;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCadastro = LocalDate.now();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "perfis")
     protected Set<Integer> tipoPessoa = new HashSet<>();
 
     public Pessoa() {

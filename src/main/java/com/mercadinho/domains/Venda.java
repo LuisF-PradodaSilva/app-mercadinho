@@ -1,17 +1,31 @@
 package com.mercadinho.domains;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "vendas")
 public class Venda {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataVenda = LocalDate.now();
     double valorTotal;
+
+    @ManyToOne
+    @JoinColumn(name = "idcliente")
     Cliente cliente;
+
+    @OneToMany(mappedBy = "venda")
     List<Produto> produtos = new ArrayList<>();
 
     public Venda() {
