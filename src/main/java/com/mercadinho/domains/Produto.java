@@ -12,18 +12,20 @@ public class Produto {
     private double valorCompra;
     private double valorVenda;
     private String unidadeMedida;
+    private Venda venda;
     private String tipoProduto;
 
     public Produto() {
     }
 
-    public Produto(int id, String nomeProduto, String descricao, double valorCompra, double valorVenda, String unidadeMedida, String tipoProduto) {
+    public Produto(int id, String nomeProduto, String descricao, double valorCompra, double valorVenda, String unidadeMedida, String tipoProduto, Venda venda) {
         this.id = id;
         this.nomeProduto = nomeProduto;
         this.descricao = descricao;
         this.valorCompra = valorCompra;
         this.valorVenda = valorVenda;
         this.unidadeMedida = unidadeMedida;
+        this.venda = venda;
         this.tipoProduto = tipoProduto;
     }
 
@@ -73,6 +75,14 @@ public class Produto {
 
     public void setUnidadeMedida(String unidadeMedida) {
         this.unidadeMedida = unidadeMedida;
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
     }
 
     public String getTipoProduto() {
