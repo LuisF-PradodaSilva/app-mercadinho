@@ -14,8 +14,8 @@ public class Funcionario extends Pessoa {
         super();
     }
 
-    public Funcionario(Set<Integer> tipoPessoa, LocalDate dataCadastro, String cpf, String nomePessoa, Long id) {
-        super(tipoPessoa, dataCadastro, cpf, nomePessoa, id);
+    public Funcionario(String cpf, String nomePessoa, Long id) {
+        super(cpf, nomePessoa, id);
     }
     
 }

@@ -31,9 +31,8 @@ public class Venda {
     public Venda() {
     }
 
-    public Venda(UUID id, LocalDate dataVenda, double valorTotal, Cliente cliente) {
+    public Venda(UUID id,double valorTotal, Cliente cliente) {
         this.id = id;
-        this.dataVenda = dataVenda;
         this.valorTotal = valorTotal;
         this.cliente = cliente;
     }

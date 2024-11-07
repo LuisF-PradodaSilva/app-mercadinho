@@ -33,9 +33,7 @@ public abstract class Pessoa {
         addTipoPessoa(TipoPessoa.CLIENTE);
     }
 
-    public Pessoa(Set<Integer> tipoPessoa, LocalDate dataCadastro, String cpf, String nomePessoa, Long id) {
-        this.tipoPessoa = tipoPessoa;
-        this.dataCadastro = dataCadastro;
+    public Pessoa(String cpf, String nomePessoa, Long id) {
         this.cpf = cpf;
         this.nomePessoa = nomePessoa;
         this.id = id;
