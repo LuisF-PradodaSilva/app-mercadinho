@@ -3,6 +3,7 @@ package com.mercadinho.services;
 import com.mercadinho.domains.Funcionario;
 import com.mercadinho.domains.dtos.FuncionarioDTO;
 import com.mercadinho.repositories.FuncionarioRepository;
+import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,11 @@ public class FuncionarioService {
 
     public Funcionario findById(Long id) {
         Optional<Funcionario> obj = funcionarioRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Funcionário não encontrado no sistema! ID: " + id));
     }
 
     public Funcionario findByCpf(String cpf) {
         Optional<Funcionario> obj = funcionarioRepository.findByCpf(cpf);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Funcionário não encontrado no sistema! CPF: " + cpf));
     }
 }

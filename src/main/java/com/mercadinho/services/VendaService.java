@@ -3,6 +3,7 @@ package com.mercadinho.services;
 import com.mercadinho.domains.Venda;
 import com.mercadinho.domains.dtos.VendaDTO;
 import com.mercadinho.repositories.VendaRepository;
+import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,6 @@ public class VendaService {
 
     public Venda findById(UUID id) {
         Optional<Venda> obj = vendaRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Venda não encontrada no sistema! ID: " + id));
     }
 }

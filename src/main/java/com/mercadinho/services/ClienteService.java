@@ -3,6 +3,7 @@ package com.mercadinho.services;
 import com.mercadinho.domains.Cliente;
 import com.mercadinho.domains.dtos.ClienteDTO;
 import com.mercadinho.repositories.ClienteRepository;
+import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,11 @@ public class ClienteService {
 
     public Cliente findById(Long id) {
         Optional<Cliente> obj = clienteRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado no sistema! ID: " + id));
     }
 
     public Cliente findByCpf(String cpf) {
         Optional<Cliente> obj = clienteRepository.findByCpf(cpf);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado no sistema! CPF: " + cpf));
     }
 }
