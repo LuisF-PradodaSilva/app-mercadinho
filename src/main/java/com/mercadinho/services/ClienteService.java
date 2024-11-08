@@ -24,4 +24,9 @@ public class ClienteService {
         Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElse(null);
     }
+
+    public Cliente findByCpf(String cpf) {
+        Optional<Cliente> obj = clienteRepository.findByCpf(cpf);
+        return obj.orElse(null);
+    }
 }
