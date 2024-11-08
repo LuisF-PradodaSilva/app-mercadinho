@@ -1,11 +1,14 @@
 package com.mercadinho.services;
 
+import com.mercadinho.domains.Venda;
 import com.mercadinho.domains.dtos.VendaDTO;
 import com.mercadinho.repositories.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,5 +19,10 @@ public class VendaService {
 
     public List<VendaDTO> findAll() {
         return vendaRepository.findAll().stream().map(obj -> new VendaDTO(obj)).collect(Collectors.toList());
+    }
+
+    public Venda findById(UUID id) {
+        Optional<Venda> obj = vendaRepository.findById(id);
+        return obj.orElse(null);
     }
 }
