@@ -5,11 +5,10 @@ import com.mercadinho.domains.dtos.VendaDTO;
 import com.mercadinho.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,5 +28,12 @@ public class VendaResource {
     public ResponseEntity<VendaDTO> findById(@PathVariable UUID id) {
         Venda obj = this.vendaService.findById(id);
         return ResponseEntity.ok().body(new VendaDTO(obj));
+    }
+
+    @PostMapping
+    public ResponseEntity<VendaDTO> create(@RequestBody VendaDTO objDto) {
+        Venda newObj = vendaService.create(objDto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

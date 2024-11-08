@@ -1,9 +1,12 @@
 package com.mercadinho.domains.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mercadinho.domains.Produto;
 import com.mercadinho.domains.Venda;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class VendaDTO {
@@ -14,6 +17,7 @@ public class VendaDTO {
     private LocalDate dataVenda = LocalDate.now();
     private double valorTotal;
     private Long cliente;
+    List<Integer> produtos = new ArrayList<>();
 
     public VendaDTO(){
     }
@@ -23,6 +27,7 @@ public class VendaDTO {
         this.dataVenda = venda.getDataVenda();
         this.valorTotal = venda.getValorTotal();
         this.cliente = venda.getCliente().getId();
+        this.produtos = venda.getProdutos();
     }
 
     public UUID getId() {
@@ -55,6 +60,14 @@ public class VendaDTO {
 
     public void setCliente(Long cliente) {
         this.cliente = cliente;
+    }
+
+    public List<Integer> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Integer> produtos) {
+        this.produtos = produtos;
     }
 
 }

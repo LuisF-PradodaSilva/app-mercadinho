@@ -37,8 +37,8 @@ public class DBService {
         Produto produto1 = new Produto(1, "Arroz", "Saco de arroz de 1kg", 15.00, 20.00, "UN" ,"Alimentos", venda1);
         Produto produto2 = new Produto(2, "Alface", "Caveça de alfaçe crespa", 8.00, 10.00, "UN" ,"Alimentos", venda2);
 
-        venda1.getProdutos().add(produto1);
-        venda2.getProdutos().add(produto2);
+        //venda1.getProdutos().add()
+        //venda2.getProdutos().add(produto2);
 
         cliente1.getVendas().add(venda1);
         cliente2.getVendas().add(venda2);

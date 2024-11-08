@@ -25,9 +25,8 @@ public class Venda {
     @JoinColumn(name = "idcliente")
     Cliente cliente;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "venda")
-    List<Produto> produtos = new ArrayList<>();
+    //@OneToMany(mappedBy = "venda")
+    List<Integer> produtos = new ArrayList<>();
 
     public Venda() {
     }
@@ -70,11 +69,11 @@ public class Venda {
         this.cliente = cliente;
     }
 
-    public List<Produto> getProdutos() {
+    public List<Integer> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(List<Produto> produtos) {
+    public void setProdutos(List<Integer> produtos) {
         this.produtos = produtos;
     }
 
