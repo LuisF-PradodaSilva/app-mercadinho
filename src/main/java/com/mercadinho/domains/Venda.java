@@ -1,6 +1,7 @@
 package com.mercadinho.domains;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class Venda {
     @JoinColumn(name = "idcliente")
     Cliente cliente;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "venda")
     List<Produto> produtos = new ArrayList<>();
 

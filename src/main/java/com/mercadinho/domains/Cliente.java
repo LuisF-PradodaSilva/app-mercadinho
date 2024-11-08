@@ -1,5 +1,6 @@
 package com.mercadinho.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Entity
 public class Cliente extends Pessoa {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     List<Venda> vendas = new ArrayList<>();
 
