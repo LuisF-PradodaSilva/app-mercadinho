@@ -14,6 +14,7 @@ public class Funcionario extends Pessoa {
 
     public Funcionario() {
         super();
+        addTipoPessoa(TipoPessoa.FUNCIONARIO);
     }
 
     public Funcionario(String cpf, String nomePessoa, Long id) {
