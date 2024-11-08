@@ -30,4 +30,10 @@ public class FuncionarioService {
         Optional<Funcionario> obj = funcionarioRepository.findByCpf(cpf);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Funcionário não encontrado no sistema! CPF: " + cpf));
     }
+
+    public Funcionario create(FuncionarioDTO objDto) {
+        objDto.setId(null);
+        Funcionario newObj = new Funcionario(objDto);
+        return funcionarioRepository.save(newObj);
+    }
 }
