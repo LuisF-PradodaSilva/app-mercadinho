@@ -1,11 +1,13 @@
 package com.mercadinho.services;
 
+import com.mercadinho.domains.Funcionario;
 import com.mercadinho.domains.dtos.FuncionarioDTO;
 import com.mercadinho.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,5 +18,10 @@ public class FuncionarioService {
 
     public List<FuncionarioDTO> findAll() {
         return funcionarioRepository.findAll().stream().map(obj -> new FuncionarioDTO(obj)).collect(Collectors.toList());
+    }
+
+    public Funcionario findById(Long id) {
+        Optional<Funcionario> obj = funcionarioRepository.findById(id);
+        return obj.orElse(null);
     }
 }
