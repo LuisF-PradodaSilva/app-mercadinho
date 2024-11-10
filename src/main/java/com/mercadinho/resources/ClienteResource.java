@@ -42,4 +42,10 @@ public class ClienteResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    private ResponseEntity<ClienteDTO> update(@PathVariable Long id, @Valid @RequestBody ClienteDTO objDto) {
+        Cliente obj = clienteService.update(id, objDto);
+        return ResponseEntity.ok().body(new ClienteDTO(obj));
+    }
 }

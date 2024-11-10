@@ -39,6 +39,14 @@ public class ClienteService {
         return clienteRepository.save(newObj);
     }
 
+    public Cliente update(Long id, ClienteDTO objDto) {
+        objDto.setId(id);
+        Cliente oldObj = findById(id);
+        validarPorCPF(objDto);
+        oldObj = new Cliente(objDto);
+        return clienteRepository.save(oldObj);
+    }
+
     private void validarPorCPF(ClienteDTO objDto) {
         Optional<Cliente> obj = clienteRepository.findByCpf(objDto.getCpf());
 
@@ -46,4 +54,5 @@ public class ClienteService {
             throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
         }
     }
+
 }
