@@ -50,4 +50,11 @@ public class VendaService {
     public Venda create(VendaDTO vendaDto) {
         return vendaRepository.save(newVenda(vendaDto));
     }
+
+    public Venda update(UUID id, VendaDTO objDto) {
+        objDto.setId(id);
+        Venda oldObj = findById(id);
+        oldObj = newVenda(objDto);
+        return vendaRepository.save(oldObj);
+    }
 }

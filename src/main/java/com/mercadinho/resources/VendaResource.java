@@ -37,4 +37,10 @@ public class VendaResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<VendaDTO> update(@PathVariable UUID id, @Valid @RequestBody VendaDTO objDto) {
+        Venda obj = vendaService.update(id, objDto);
+        return ResponseEntity.ok().body(new VendaDTO(obj));
+    }
 }
