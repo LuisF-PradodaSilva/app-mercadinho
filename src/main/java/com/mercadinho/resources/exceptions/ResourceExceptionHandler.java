@@ -1,5 +1,6 @@
 package com.mercadinho.resources.exceptions;
 
+import com.mercadinho.services.exceptions.DataIntegrityViolationException;
 import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,15 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<StandardError> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Bad Request",
+                ex.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest request) {
+
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Data Integrity Violation",
                 ex.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

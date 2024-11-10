@@ -3,6 +3,7 @@ package com.mercadinho.services;
 import com.mercadinho.domains.Funcionario;
 import com.mercadinho.domains.dtos.FuncionarioDTO;
 import com.mercadinho.repositories.FuncionarioRepository;
+import com.mercadinho.services.exceptions.DataIntegrityViolationException;
 import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,16 @@ public class FuncionarioService {
 
     public Funcionario create(FuncionarioDTO objDto) {
         objDto.setId(null);
+        validarPorCPF(objDto);
         Funcionario newObj = new Funcionario(objDto);
         return funcionarioRepository.save(newObj);
+    }
+
+    private void validarPorCPF(FuncionarioDTO objDto) {
+        Optional<Funcionario> obj = funcionarioRepository.findByCpf(objDto.getCpf());
+
+        if (obj.isPresent() && obj.get().getId() != objDto.getId()) {
+            throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
+        }
     }
 }

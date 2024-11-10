@@ -3,6 +3,7 @@ package com.mercadinho.services;
 import com.mercadinho.domains.Cliente;
 import com.mercadinho.domains.dtos.ClienteDTO;
 import com.mercadinho.repositories.ClienteRepository;
+import com.mercadinho.services.exceptions.DataIntegrityViolationException;
 import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,16 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO objDto) {
         objDto.setId(null);
+        validarPorCPF(objDto);
         Cliente newObj = new Cliente(objDto);
         return clienteRepository.save(newObj);
+    }
+
+    private void validarPorCPF(ClienteDTO objDto) {
+        Optional<Cliente> obj = clienteRepository.findByCpf(objDto.getCpf());
+
+        if (obj.isPresent() && obj.get().getId() != objDto.getId()) {
+            throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
+        }
     }
 }
