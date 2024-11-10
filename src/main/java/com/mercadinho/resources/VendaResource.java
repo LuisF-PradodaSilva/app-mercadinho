@@ -3,6 +3,7 @@ package com.mercadinho.resources;
 import com.mercadinho.domains.Venda;
 import com.mercadinho.domains.dtos.VendaDTO;
 import com.mercadinho.services.VendaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class VendaResource {
     }
 
     @PostMapping
-    public ResponseEntity<VendaDTO> create(@RequestBody VendaDTO objDto) {
+    public ResponseEntity<VendaDTO> create(@Valid @RequestBody VendaDTO objDto) {
         Venda newObj = vendaService.create(objDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();

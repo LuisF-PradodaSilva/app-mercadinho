@@ -1,18 +1,37 @@
 package com.mercadinho.domains.dtos;
 
 import com.mercadinho.domains.Produto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.UUID;
 
 public class ProdutoDTO {
 
     private int id;
+
+    @NotNull(message = "O nome do produto não pode ser nulo!")
+    @NotBlank(message = "O nome do produto não pode ser em branco!")
     private String nomeProduto;
+
+    @NotNull(message = "A descrição do produto não pode ser nulo!")
+    @NotBlank(message = "A descrição do produto não pode ser em branco!")
     private String descricao;
+
+    @Positive(message = "O valor de compra não pode ser R$0,00 ou negativo!")
     private double valorCompra;
+
+    @Positive(message = "O valor de venda não pode ser R$0,00 ou negativo!")
     private double valorVenda;
+
+    @NotNull(message = "A unidade de medida não pode ser nulo!")
+    @NotBlank(message = "A unidade de medida não pode ser em branco!")
     private String unidadeMedida;
     private UUID venda;
+
+    @NotNull(message = "O tipo do produto não pode ser nulo!")
+    @NotBlank(message = "O tipo do produto não pode ser em branco!")
     private String tipoProduto;
 
     public ProdutoDTO() {

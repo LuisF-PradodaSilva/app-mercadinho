@@ -3,6 +3,7 @@ package com.mercadinho.domains.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mercadinho.domains.Produto;
 import com.mercadinho.domains.Venda;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class VendaDTO {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataVenda = LocalDate.now();
+
+    @Positive(message = "O valor total da venda não pode ser R$0,00 ou negativo!")
     private double valorTotal;
     private Long cliente;
     List<Integer> produtos = new ArrayList<>();

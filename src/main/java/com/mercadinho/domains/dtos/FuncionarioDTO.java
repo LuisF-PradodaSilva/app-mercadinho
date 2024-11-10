@@ -3,6 +3,8 @@ package com.mercadinho.domains.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mercadinho.domains.Funcionario;
 import com.mercadinho.domains.enums.TipoPessoa;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -12,7 +14,13 @@ import java.util.stream.Collectors;
 public class FuncionarioDTO {
 
     protected Long id;
+
+    @NotNull(message = "O nome não pode ser nulo!")
+    @NotBlank(message = "O nome não pode ser em branco!")
     protected String nomePessoa;
+
+    @NotNull(message = "O CPF não pode ser nulo!")
+    @NotBlank(message = "O CPF não pode ser em branco!")
     protected String cpf;
 
     @JsonFormat(pattern = "dd/MM/yyyy")

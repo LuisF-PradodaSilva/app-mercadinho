@@ -3,6 +3,7 @@ package com.mercadinho.resources;
 import com.mercadinho.domains.Cliente;
 import com.mercadinho.domains.dtos.ClienteDTO;
 import com.mercadinho.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class ClienteResource {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO objDto) {
+    public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteDTO objDto) {
         Cliente newObj = clienteService.create(objDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();

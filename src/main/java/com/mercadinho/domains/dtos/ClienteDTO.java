@@ -2,6 +2,8 @@ package com.mercadinho.domains.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mercadinho.domains.Cliente;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -11,7 +13,13 @@ import java.util.stream.Collectors;
 public class ClienteDTO {
 
     protected Long id;
+
+    @NotNull(message = "O nome não pode ser nulo!")
+    @NotBlank(message = "O nome não pode ser em branco!")
     protected String nomePessoa;
+
+    @NotNull(message = "O CPF não pode ser nulo!")
+    @NotBlank(message = "O CPF não pode ser em branco!")
     protected String cpf;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
