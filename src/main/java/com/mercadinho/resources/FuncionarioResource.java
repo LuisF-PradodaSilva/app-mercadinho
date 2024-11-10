@@ -42,4 +42,10 @@ public class FuncionarioResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<FuncionarioDTO> update(@PathVariable Long id, @Valid @RequestBody FuncionarioDTO objDto) {
+        Funcionario obj = funcionarioService.update(id, objDto);
+        return ResponseEntity.ok().body(new FuncionarioDTO(obj));
+    }
 }
