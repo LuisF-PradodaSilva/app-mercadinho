@@ -54,4 +54,11 @@ public class ProdutoService {
     public Produto create(ProdutoDTO ProdutoDto) {
         return produtoRepository.save(newProduto(ProdutoDto));
     }
+
+    public Produto update(int id, ProdutoDTO objDto) {
+        objDto.setId(id);
+        Produto oldObj = findById(id);
+        oldObj = newProduto(objDto);
+        return produtoRepository.save(oldObj);
+    }
 }
