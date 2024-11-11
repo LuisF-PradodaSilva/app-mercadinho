@@ -47,6 +47,11 @@ public class ClienteService {
         return clienteRepository.save(oldObj);
     }
 
+    public void delete(Long id) {
+        Cliente obj = findById(id);
+        clienteRepository.deleteById(id);
+    }
+
     private void validarPorCPF(ClienteDTO objDto) {
         Optional<Cliente> obj = clienteRepository.findByCpf(objDto.getCpf());
 
