@@ -3,6 +3,8 @@ package com.mercadinho.resources;
 import com.mercadinho.domains.Funcionario;
 import com.mercadinho.domains.dtos.FuncionarioDTO;
 import com.mercadinho.services.FuncionarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,28 +16,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/funcionario")
+@Tag(name = "Funcionário", description = "API para gerenciamento de funcionários")
 public class FuncionarioResource {
 
     @Autowired
     private FuncionarioService funcionarioService;
 
+    @Operation(summary = "Listar todos os funcionários", description = "Retorna uma lista com todos os funcionários cadastrados.")
     @GetMapping
     public ResponseEntity<List<FuncionarioDTO>> findAll() {
         return ResponseEntity.ok().body(funcionarioService.findAll());
     }
 
+    @Operation(summary = "Buscar funcionário por ID", description = "Retorna um funcionário com base no ID fornecido.")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id) {
         Funcionario obj = this.funcionarioService.findById(id);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
 
+    @Operation(summary = "Buscar funcionário por CPF", description = "Retorna um funcionário com base no CPF fornecido.")
     @GetMapping(value = "/cpf/{cpf}")
     public  ResponseEntity<FuncionarioDTO> findByCpf(@PathVariable String cpf) {
         Funcionario obj = this.funcionarioService.findByCpf(cpf);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
 
+    @Operation(summary = "Criar um novo funcionário", description = "Cria um novo funcionário com base nos dados fornecidos.")
     @PostMapping
     public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO objDto) {
         Funcionario newObj = funcionarioService.create(objDto);
@@ -43,12 +50,14 @@ public class FuncionarioResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @Operation(summary = "Atualizar funcionário", description = "Atualiza os dados do funcionário.")
     @PutMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> update(@PathVariable Long id, @Valid @RequestBody FuncionarioDTO objDto) {
         Funcionario obj = funcionarioService.update(id, objDto);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
 
+    @Operation(summary = "Deletar funcionário", description = "Deleta um funcionário com base no ID fornecido.")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> delete(@PathVariable Long id) {
         funcionarioService.delete(id);

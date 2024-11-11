@@ -3,6 +3,8 @@ package com.mercadinho.resources;
 import com.mercadinho.domains.Venda;
 import com.mercadinho.domains.dtos.VendaDTO;
 import com.mercadinho.services.VendaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,22 +17,25 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/venda")
+@Tag(name = "Vendas", description = "API para gerenciamento de vendas")
 public class VendaResource {
 
     @Autowired
     private VendaService vendaService;
 
+    @Operation(summary = "Listar todas as vendas", description = "Retorna uma lista com todas as vendas cadastradas.")
     @GetMapping
     public ResponseEntity<List<VendaDTO>> findAll() {
         return ResponseEntity.ok().body(vendaService.findAll());
     }
-
+    @Operation(summary = "Buscar venda por ID", description = "Retorna uma venda com base no ID fornecido.")
     @GetMapping(value = "/{id}")
     public ResponseEntity<VendaDTO> findById(@PathVariable UUID id) {
         Venda obj = this.vendaService.findById(id);
         return ResponseEntity.ok().body(new VendaDTO(obj));
     }
 
+    @Operation(summary = "Criar uma nova venda", description = "Cria uma nova venda com base nos dados fornecidos.")
     @PostMapping
     public ResponseEntity<VendaDTO> create(@Valid @RequestBody VendaDTO objDto) {
         Venda newObj = vendaService.create(objDto);
@@ -38,12 +43,14 @@ public class VendaResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @Operation(summary = "Atualizar venda", description = "Atualiza os dados da venda.")
     @PutMapping(value = "/{id}")
     public ResponseEntity<VendaDTO> update(@PathVariable UUID id, @Valid @RequestBody VendaDTO objDto) {
         Venda obj = vendaService.update(id, objDto);
         return ResponseEntity.ok().body(new VendaDTO(obj));
     }
 
+    @Operation(summary = "Deletar venda", description = "Deleta uma venda com base no ID fornecido.")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<VendaDTO> delete(@PathVariable UUID id) {
         vendaService.delete(id);
