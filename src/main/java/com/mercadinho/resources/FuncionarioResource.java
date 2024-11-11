@@ -48,4 +48,10 @@ public class FuncionarioResource {
         Funcionario obj = funcionarioService.update(id, objDto);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<FuncionarioDTO> delete(@PathVariable Long id) {
+        funcionarioService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
