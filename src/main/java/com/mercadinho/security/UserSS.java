@@ -1,12 +1,11 @@
 package com.mercadinho.security;
 
-import com.mercadinho.domains.Funcionario;
+import com.mercadinho.domains.Pessoa;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserSS implements UserDetails {
@@ -15,10 +14,10 @@ public class UserSS implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserSS(Funcionario funcionario) {
-        this.username = funcionario.getCpf();
-        this.password = funcionario.getCpf();
-        this.authorities = funcionario.getTipoPessoa().stream().map(x -> new SimpleGrantedAuthority(x.getTipoPessoa()))
+    public UserSS(Pessoa pessoa) {
+        this.username = pessoa.getCpf();
+        this.password = pessoa.getCpf();
+        this.authorities = pessoa.getTipoPessoa().stream().map(x -> new SimpleGrantedAuthority(x.getTipoPessoa()))
                 .collect(Collectors.toSet());
     }
 

@@ -1,7 +1,7 @@
 package com.mercadinho.services;
 
-import com.mercadinho.domains.Funcionario;
-import com.mercadinho.repositories.FuncionarioRepository;
+import com.mercadinho.domains.Pessoa;
+import com.mercadinho.repositories.PessoaRepository;
 import com.mercadinho.security.UserSS;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,19 +13,19 @@ import java.util.Optional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final FuncionarioRepository funcionarioRepository;
+    private final PessoaRepository pessoaRepository;
 
-    public UserDetailsServiceImpl(FuncionarioRepository funcionarioRepository) {
-        this.funcionarioRepository = funcionarioRepository;
+    public UserDetailsServiceImpl(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Funcionario> funcionario = funcionarioRepository.findByCpf(username);
+        Optional<Pessoa> pessoa = pessoaRepository.findByCpf(username);
 
-        if (funcionario.isEmpty()) {
+        if (pessoa.isEmpty()) {
             throw new UsernameNotFoundException("User not found! CPF: " + username);
         }
-        return new UserSS(funcionario.orElse(null));
+        return new UserSS(pessoa.orElse(null));
     }
 }
