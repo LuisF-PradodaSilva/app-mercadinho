@@ -42,4 +42,10 @@ public class ProdutoResource {
         Produto obj = produtoService.update(id, objDto);
         return ResponseEntity.ok().body(new ProdutoDTO(obj));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ProdutoDTO> delete(@PathVariable int id) {
+        produtoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

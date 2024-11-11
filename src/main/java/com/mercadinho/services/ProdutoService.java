@@ -5,9 +5,11 @@ import com.mercadinho.domains.Venda;
 import com.mercadinho.domains.dtos.ProdutoDTO;
 import com.mercadinho.repositories.ProdutoRepository;
 import com.mercadinho.repositories.VendaRepository;
+import com.mercadinho.services.exceptions.DataIntegrityViolationException;
 import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,5 +62,13 @@ public class ProdutoService {
         Produto oldObj = findById(id);
         oldObj = newProduto(objDto);
         return produtoRepository.save(oldObj);
+    }
+
+    public void delete(@PathVariable int id) {
+        Produto obj = findById(id);
+        if (obj.getVenda() != null) {
+            throw new DataIntegrityViolationException("Produto já faz parte de vendas! Impossível deletar.");
+        }
+        produtoRepository.deleteById(id);
     }
 }
