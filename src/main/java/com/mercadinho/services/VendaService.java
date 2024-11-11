@@ -4,6 +4,7 @@ import com.mercadinho.domains.Cliente;
 import com.mercadinho.domains.Venda;
 import com.mercadinho.domains.dtos.VendaDTO;
 import com.mercadinho.repositories.VendaRepository;
+import com.mercadinho.services.exceptions.DataIntegrityViolationException;
 import com.mercadinho.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,13 @@ public class VendaService {
         Venda oldObj = findById(id);
         oldObj = newVenda(objDto);
         return vendaRepository.save(oldObj);
+    }
+
+    public void delete(UUID id) {
+        Venda obj = findById(id);
+        if (obj.getProdutos().size() > 0) {
+            throw new DataIntegrityViolationException("A venda já possui produtos! Não foi possível deletar.");
+        }
+        vendaRepository.deleteById(id);
     }
 }

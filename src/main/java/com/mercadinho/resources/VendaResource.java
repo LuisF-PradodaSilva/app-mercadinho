@@ -43,4 +43,10 @@ public class VendaResource {
         Venda obj = vendaService.update(id, objDto);
         return ResponseEntity.ok().body(new VendaDTO(obj));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<VendaDTO> delete(@PathVariable UUID id) {
+        vendaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
