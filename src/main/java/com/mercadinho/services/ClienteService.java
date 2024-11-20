@@ -32,6 +32,11 @@ public class ClienteService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado no sistema! CPF: " + cpf));
     }
 
+    public Cliente findByNome(String nomePessoa) {
+        Optional<Cliente> obj = clienteRepository.findByCpf(nomePessoa);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado no sistema! Nome: " + nomePessoa));
+    }
+
     public Cliente create(ClienteDTO objDto) {
         objDto.setId(null);
         validarPorCPF(objDto);

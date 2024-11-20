@@ -21,10 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Pessoa> pessoa = pessoaRepository.findByCpf(username);
+        Optional<Pessoa> pessoa = pessoaRepository.findByNomePessoa(username);
 
         if (pessoa.isEmpty()) {
-            throw new UsernameNotFoundException("User not found! CPF: " + username);
+            throw new UsernameNotFoundException("User not found! Nome: " + username);
         }
         return new UserSS(pessoa.orElse(null));
     }

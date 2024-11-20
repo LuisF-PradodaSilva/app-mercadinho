@@ -42,6 +42,13 @@ public class ClienteResource {
         return ResponseEntity.ok().body(new ClienteDTO(obj));
     }
 
+    @Operation(summary = "Buscar cliente por Nome", description = "Retorna um cliente com nome no CPF fornecido.")
+    @GetMapping(value = "/nomePessoa/{nomePessoa}")
+    public ResponseEntity<ClienteDTO> findByNome(@PathVariable String nomePessoa) {
+        Cliente obj = this.clienteService.findByCpf(nomePessoa);
+        return ResponseEntity.ok().body(new ClienteDTO(obj));
+    }
+
     @Operation(summary = "Criar um novo cliente", description = "Cria um novo cliente com base nos dados fornecidos.")
     @PostMapping
     public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteDTO objDto) {

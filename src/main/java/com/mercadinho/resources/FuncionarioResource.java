@@ -42,6 +42,13 @@ public class FuncionarioResource {
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
 
+    @Operation(summary = "Buscar funcionário por nome", description = "Retorna um funcionário com base no nome fornecido.")
+    @GetMapping(value = "/nomePessoa/{nomePessoa}")
+    public  ResponseEntity<FuncionarioDTO> findByNome(@PathVariable String nomePessoa) {
+        Funcionario obj = this.funcionarioService.findByCpf(nomePessoa);
+        return ResponseEntity.ok().body(new FuncionarioDTO(obj));
+    }
+
     @Operation(summary = "Criar um novo funcionário", description = "Cria um novo funcionário com base nos dados fornecidos.")
     @PostMapping
     public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO objDto) {

@@ -32,6 +32,11 @@ public class FuncionarioService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Funcionário não encontrado no sistema! CPF: " + cpf));
     }
 
+    public Funcionario findByNome(String nomePessoa) {
+        Optional<Funcionario> obj = funcionarioRepository.findByCpf(nomePessoa);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Funcionário não encontrado no sistema! Nome: " + nomePessoa));
+    }
+
     public Funcionario create(FuncionarioDTO objDto) {
         objDto.setId(null);
         validarPorCPF(objDto);

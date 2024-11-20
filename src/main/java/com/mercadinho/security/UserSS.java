@@ -15,7 +15,7 @@ public class UserSS implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserSS(Pessoa pessoa) {
-        this.username = pessoa.getCpf();
+        this.username = pessoa.getNomePessoa();
         this.password = pessoa.getCpf();
         this.authorities = pessoa.getTipoPessoa().stream().map(x -> new SimpleGrantedAuthority(x.getTipoPessoa()))
                 .collect(Collectors.toSet());
