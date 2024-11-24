@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,11 +25,14 @@ public class VendaResource {
     private VendaService vendaService;
 
     @Operation(summary = "Listar todas as vendas", description = "Retorna uma lista com todas as vendas cadastradas.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<VendaDTO>> findAll() {
         return ResponseEntity.ok().body(vendaService.findAll());
     }
+
     @Operation(summary = "Buscar venda por ID", description = "Retorna uma venda com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<VendaDTO> findById(@PathVariable UUID id) {
         Venda obj = this.vendaService.findById(id);
@@ -36,6 +40,7 @@ public class VendaResource {
     }
 
     @Operation(summary = "Criar uma nova venda", description = "Cria uma nova venda com base nos dados fornecidos.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<VendaDTO> create(@Valid @RequestBody VendaDTO objDto) {
         Venda newObj = vendaService.create(objDto);
@@ -44,6 +49,7 @@ public class VendaResource {
     }
 
     @Operation(summary = "Atualizar venda", description = "Atualiza os dados da venda.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<VendaDTO> update(@PathVariable UUID id, @Valid @RequestBody VendaDTO objDto) {
         Venda obj = vendaService.update(id, objDto);
@@ -51,6 +57,7 @@ public class VendaResource {
     }
 
     @Operation(summary = "Deletar venda", description = "Deleta uma venda com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<VendaDTO> delete(@PathVariable UUID id) {
         vendaService.delete(id);

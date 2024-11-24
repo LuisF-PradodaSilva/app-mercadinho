@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,12 +24,14 @@ public class FuncionarioResource {
     private FuncionarioService funcionarioService;
 
     @Operation(summary = "Listar todos os funcionários", description = "Retorna uma lista com todos os funcionários cadastrados.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<FuncionarioDTO>> findAll() {
         return ResponseEntity.ok().body(funcionarioService.findAll());
     }
 
     @Operation(summary = "Buscar funcionário por ID", description = "Retorna um funcionário com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id) {
         Funcionario obj = this.funcionarioService.findById(id);
@@ -36,6 +39,7 @@ public class FuncionarioResource {
     }
 
     @Operation(summary = "Buscar funcionário por CPF", description = "Retorna um funcionário com base no CPF fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping(value = "/cpf/{cpf}")
     public  ResponseEntity<FuncionarioDTO> findByCpf(@PathVariable String cpf) {
         Funcionario obj = this.funcionarioService.findByCpf(cpf);
@@ -43,6 +47,7 @@ public class FuncionarioResource {
     }
 
     @Operation(summary = "Buscar funcionário por nome", description = "Retorna um funcionário com base no nome fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping(value = "/nomePessoa/{nomePessoa}")
     public  ResponseEntity<FuncionarioDTO> findByNome(@PathVariable String nomePessoa) {
         Funcionario obj = this.funcionarioService.findByCpf(nomePessoa);
@@ -50,6 +55,7 @@ public class FuncionarioResource {
     }
 
     @Operation(summary = "Criar um novo funcionário", description = "Cria um novo funcionário com base nos dados fornecidos.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO objDto) {
         Funcionario newObj = funcionarioService.create(objDto);
@@ -58,6 +64,7 @@ public class FuncionarioResource {
     }
 
     @Operation(summary = "Atualizar funcionário", description = "Atualiza os dados do funcionário.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> update(@PathVariable Long id, @Valid @RequestBody FuncionarioDTO objDto) {
         Funcionario obj = funcionarioService.update(id, objDto);
@@ -65,6 +72,7 @@ public class FuncionarioResource {
     }
 
     @Operation(summary = "Deletar funcionário", description = "Deleta um funcionário com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> delete(@PathVariable Long id) {
         funcionarioService.delete(id);

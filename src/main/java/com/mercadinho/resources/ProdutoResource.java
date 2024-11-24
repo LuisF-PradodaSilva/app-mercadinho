@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,12 +24,14 @@ public class ProdutoResource {
     private ProdutoService produtoService;
 
     @Operation(summary = "Listar todos os produtos", description = "Retorna uma lista com todos os produtos cadastrados.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> findAll() {
         return ResponseEntity.ok().body(produtoService.findAll());
     }
 
     @Operation(summary = "Buscar produto por ID", description = "Retorna um produto com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProdutoDTO> findById(@PathVariable int id) {
         Produto obj = this.produtoService.findById(id);
@@ -36,6 +39,7 @@ public class ProdutoResource {
     }
 
     @Operation(summary = "Criar um novo produto", description = "Cria um novo produto com base nos dados fornecidos.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ProdutoDTO> create(@Valid @RequestBody ProdutoDTO objDto) {
         Produto newObj = produtoService.create(objDto);
@@ -44,6 +48,7 @@ public class ProdutoResource {
     }
 
     @Operation(summary = "Atualizar produto", description = "Atualiza os dados do produto.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProdutoDTO> update(@PathVariable int id, @Valid @RequestBody ProdutoDTO objDto) {
         Produto obj = produtoService.update(id, objDto);
@@ -51,6 +56,7 @@ public class ProdutoResource {
     }
 
     @Operation(summary = "Deletar produto", description = "Deleta um produto com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ProdutoDTO> delete(@PathVariable int id) {
         produtoService.delete(id);

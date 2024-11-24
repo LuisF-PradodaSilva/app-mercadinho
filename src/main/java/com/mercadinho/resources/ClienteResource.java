@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -23,12 +24,14 @@ public class ClienteResource {
     private ClienteService clienteService;
 
     @Operation(summary = "Listar todos os clientes", description = "Retorna uma lista com todos os clientes cadastrados.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> findAll() {
         return ResponseEntity.ok().body(clienteService.findAll());
     }
 
     @Operation(summary = "Buscar cliente por ID", description = "Retorna um cliente com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN') or hasRole('CLIENTE')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> findById(@PathVariable Long id) {
         Cliente obj = this.clienteService.findById(id);
@@ -36,6 +39,7 @@ public class ClienteResource {
     }
 
     @Operation(summary = "Buscar cliente por CPF", description = "Retorna um cliente com base no CPF fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN') or hasRole('CLIENTE')")
     @GetMapping(value = "/cpf/{cpf}")
     public ResponseEntity<ClienteDTO> findByCpf(@PathVariable String cpf) {
         Cliente obj = this.clienteService.findByCpf(cpf);
@@ -43,6 +47,7 @@ public class ClienteResource {
     }
 
     @Operation(summary = "Buscar cliente por Nome", description = "Retorna um cliente com nome no CPF fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN') or hasRole('CLIENTE')")
     @GetMapping(value = "/nomePessoa/{nomePessoa}")
     public ResponseEntity<ClienteDTO> findByNome(@PathVariable String nomePessoa) {
         Cliente obj = this.clienteService.findByCpf(nomePessoa);
@@ -50,6 +55,7 @@ public class ClienteResource {
     }
 
     @Operation(summary = "Criar um novo cliente", description = "Cria um novo cliente com base nos dados fornecidos.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteDTO objDto) {
         Cliente newObj = clienteService.create(objDto);
@@ -58,6 +64,7 @@ public class ClienteResource {
     }
 
     @Operation(summary = "Atualizar cliente", description = "Atualiza os dados do cliente.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @PutMapping(value = "/{id}")
     private ResponseEntity<ClienteDTO> update(@PathVariable Long id, @Valid @RequestBody ClienteDTO objDto) {
         Cliente obj = clienteService.update(id, objDto);
@@ -65,6 +72,7 @@ public class ClienteResource {
     }
 
     @Operation(summary = "Deletar cliente", description = "Deleta um cliente com base no ID fornecido.")
+    @PreAuthorize("hasRole('FUNCIONARIO') or hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> delete(@PathVariable Long id) {
         clienteService.delete(id);
